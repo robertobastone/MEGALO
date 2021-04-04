@@ -30,7 +30,7 @@ zoom_1_height = zoom_1_y[1] - zoom_1_y[0]
 
 zoom_2_x = [-5,20]
 zoom_2_width = zoom_2_x[1] - zoom_2_x[0]
-zoom_2_y = [-10,30]
+zoom_2_y = [-10,15]
 zoom_2_height = zoom_2_y[1] - zoom_2_y[0]
 
 markerDictionary = Line2D.markers
@@ -89,12 +89,13 @@ for key in markersNew.keys():
 
 fig = plt.figure(figsize=(15,10))
 spec = gridspec.GridSpec(ncols=3, nrows=3, figure=fig)
-fig.suptitle('Map of Messier Objects')
+fig.suptitle('Distribution of Messier Objects (Galactic frame)')
 fig.patch.set_linewidth(4)
 fig.patch.set_edgecolor('r')
 
 ax_galaxy = fig.add_subplot(spec[0:2, :], projection='hammer')
 ax_galaxy.grid(True)
+ax_galaxy.set_title('Galactic frame')
 ax_galaxy.locator_params(axis='x', nbins=7)
 ax_galaxy.set_xlabel(r'Galactic latitude $\mathrm{[\degree]}$')
 ax_galaxy.set_ylabel(r'Galactic longitude $\mathrm{[\degree]}$')
@@ -106,7 +107,7 @@ for ox in messierObjects:
     kk = markersNew[ox.type].split('-')[1]
     ax_galaxy.scatter(x,y, marker = mark , s=gal_sizeOfMarkers, linewidth=1, color= kk, zorder = 100)
     #ax_galaxy.annotate(str(ox.name), (x,y), fontsize = gal_sizeOfFont)
-    print(str(ox.name) + '--' + str(markersNew[ox.type].split('-')[1]))
+    #print(str(ox.name) + '--' + str(markersNew[ox.type].split('-')[1]))
 rect = mpatches.Rectangle((np.radians(zoom_1_x[0]), np.radians(zoom_1_y[0])), np.radians(zoom_1_width), np.radians(zoom_1_height), linewidth=1, edgecolor='r', facecolor='none')
 ax_galaxy.add_patch(rect)
 rect2 = mpatches.Rectangle((np.radians(zoom_2_x[0]), np.radians(zoom_2_y[0])), np.radians(zoom_2_width), np.radians(zoom_2_height), linewidth=1, edgecolor='r', facecolor='none')
@@ -114,6 +115,7 @@ ax_galaxy.add_patch(rect2)
 
 ax_zoom1 = fig.add_subplot(spec[2, 0])
 ax_zoom1.grid(True)
+ax_zoom1.set_title('Zoomed region ' + str(zoom_1_width) + r'$\mathrm{\degree}$x' + str(zoom_1_height) + r'$\mathrm{\degree}$')
 ax_zoom1.set_xlabel(r'Galactic latitude $\mathrm{[\degree]}$')
 ax_zoom1.set_xlim(zoom_1_x[0],zoom_1_x[1])
 ax_zoom1.set_ylabel(r'Galactic longitude $\mathrm{[\degree]}$')
@@ -128,6 +130,7 @@ for ox in messierObjects:
 
 ax_zoom2 = fig.add_subplot(spec[2, 1])
 ax_zoom2.grid(True)
+ax_zoom2.set_title('Zoomed region ' + str(zoom_2_width) + r'$\mathrm{\degree}$x' + str(zoom_2_height) + r'$\mathrm{\degree}$')
 ax_zoom2.set_xlabel(r'Galactic latitude $\mathrm{[\degree]}$')
 ax_zoom2.set_xlim(zoom_2_x[0],zoom_2_x[1])
 ax_zoom2.set_ylim(zoom_2_y[0],zoom_2_y[1])
