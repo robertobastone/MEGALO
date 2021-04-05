@@ -1,4 +1,5 @@
 # MEGALO
+MEssier GALactic Observatory is a script that plot the Messier Objects in the galactic frame
 
 # Milestones
 1. April, 03 2021: MEGALO 1.00
